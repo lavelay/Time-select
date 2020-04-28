@@ -1,0 +1,40 @@
+HTML
+   
+   <input type="text" id="st1" readonly value="">
+            至
+   <input type="text" id="st2" readonly value="">
+
+JS
+
+// 日期控件
+      var start = {},
+        end = {};
+      jeDate('#st1', {
+        format: "YYYY-MM-DD",
+        isClear: false, //是否显示清空
+        isToday: false,
+        donefun: function (obj) {
+          end.minDate = obj.val; //开始日选好后，重置结束日的最小日期
+          jeDate("#st2", LinkageEndDate(false));
+        }
+      });
+      jeDate('#st2', LinkageEndDate);
+
+      function LinkageEndDate(istg) {
+        return {
+          trigger: istg || "click",
+          format: "YYYY-MM-DD",
+          isClear: false, //是否显示清空
+          isToday: false,
+          minDate: function (that) {
+            //that 指向实例对象
+            var nowMinDate = jeDate.valText('#st1') == "" && jeDate.valText(that.valCell) == "";
+            return nowMinDate ? jeDate.nowDate({
+              DD: 0
+            }) : end.minDate;
+          }, //设定最小日期为当前日期
+          donefun: function (obj) {
+            start.maxDate = obj.val; //将结束日的初始值设定为开始日的最大日期
+          }
+        };
+      }
