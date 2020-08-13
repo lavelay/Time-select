@@ -1,0 +1,51 @@
+      var startTime = 0;
+      var endTime = 0;
+      // 日期选择
+      // start
+      new Jdate({
+        el: '#time1',
+        format: 'YYYY-MM',
+        init: function () {
+          // console.log('插件开始触发');
+        },
+        moveEnd: function () {
+          // console.log('滚动结束');
+        },
+        confirm: function (date) {
+          startTime = +new Date(date);
+          if (startTime > endTime && endTime != 0) {
+            layer.open({
+              content: '不能大于结束时间的日期',
+              btn: '确定'
+            });
+            return false;
+          }
+        },
+        cancel: function () {
+          console.log('插件运行取消');
+        }
+      })
+      // end
+      new Jdate({
+        el: '#time2',
+        format: 'YYYY-MM',
+        init: function () {
+          // console.log('插件开始触发');
+        },
+        moveEnd: function () {
+          // console.log('滚动结束');
+        },
+        confirm: function (date) {
+          endTime = +new Date(date);
+          if (startTime > endTime) {
+            layer.open({
+              content: '不能小于开始时间的日期',
+              btn: '确定'
+            });
+            return false;
+          }
+        },
+        cancel: function () {
+          // console.log('插件运行取消');
+        }
+      })
